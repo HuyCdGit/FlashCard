@@ -1,0 +1,36 @@
+# services:
+#   sqlserver:
+#     # platform: linux/amd64
+#     image: mcr.microsoft.com/azure-sql-edge:latest
+#     container_name: sqlserver22-container
+#     environment:
+#       - ACCEPT_EULA=1 #Accept End-User License Agreement
+#       - SA_PASSWORD=Password123@
+#     ports: #Port mapping from container to host
+#       - "1433:1433"
+#     volumes: #Mapping data directory from container to host (laptop, PC)
+#       - ./db_data:/var/opt/mssql/data
+#       # - ./sql_init:/docker-entrypoint-initdb.d #sqL_init contains SQL scripts
+#     restart: always
+#     mem_limit: 2g # Memory limit for the container
+#     memswap_limit: 3g
+# sudo docker run --cap-add SYS_PTRACE -e 'ACCEPT_EULA=1' -e 'MSSQL_SA_PASSWORD=Password123@' -p 1433:1433 --name azuresqledge -d mcr.microsoft.com/azure-sql-edge
+# version: "3"
+services:
+  sqlserver:
+    image: mcr.microsoft.com/azure-sql-edge
+    container_name: sqlserver22-container
+    ports:
+      - "1434:1433"
+    environment:
+      - ACCEPT_EULA=1
+      - MSSQL_SA_PASSWORD=Password123@
+    volumes:
+      - ../db_data:/var/opt/mssql/data
+    cap_add:
+      - SYS_PTRACE
+    restart: always
+    mem_limit: 2g
+    memswap_limit: 3g
+
+  # detach: true
