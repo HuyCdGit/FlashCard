@@ -13,15 +13,15 @@ namespace FlashCardAppWebApi.Models
         [Required(ErrorMessage = "Term is required.")]
         [MaxLength(255, ErrorMessage = "Term cannot exceed 255 characters.")]
         [Column("term")]
-        public string Term { get; set; } = "";
+        public string? Term { get; set; }
 
         [Required(ErrorMessage = "Definition is required.")]
         [Column("definition")]
-        public string Definition { get; set; } = "";
+        public string? Definition { get; set; }
 
         [MaxLength(1000, ErrorMessage = "Image URL cannot exceed 1000 characters.")]
         [Column("image")]
-        public string Image { get; set; } = "";
+        public string? Image { get; set; }
 
         [DataType(DataType.Date)]
         [Column("created_date")]

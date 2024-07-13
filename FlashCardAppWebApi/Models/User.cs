@@ -24,25 +24,25 @@ namespace FlashCardAppWebApi.Models
         [MaxLength(255)]
         [EmailAddress]
         [Column("email")]
-        public string Email { get; set; } = "";
+        public string? Email { get; set; }
 
         [Required(ErrorMessage = "Phone number is required")]
         [RegularExpression(@"^0\d{10}$", ErrorMessage = "Invalid phone number")]
         [MaxLength(20)]
         [Column("phone")]
-        public string Phone { get; set; } = "";
+        public string? Phone { get; set; }
 
         [Required(ErrorMessage = "FullName is required")]
         [MaxLength(255)]
         [Column("full_name")]
-        public string FullName { get; set; } = "";
+        public string? FullName { get; set; }
 
         [Column("date_of_birth")]
         public DateTime? DateOfBirth { get; set; }
 
         [MaxLength(200)]
         [Column("country")]
-        public string Country { get; set; } = "";
+        public string? Country { get; set; }
         //navigation property
         public required ICollection<UserCategory> UserCategory { get; set; }
 

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <script>
+    const page = 1;
+    const limit = 10;
+    const socket = new WebSocket(
+      `wss://localhost:7233/api/Flashcard/ws?page=${page}&limit=${limit}`
+    );
+
+    socket.onopen = () => {
+      debugger;
+      console.log("Connected server by the Websocket");
+    };
+    socket.onmessage = (event) => {
+      const flashcards = JSON.parse(event.data);
+      debugger;
+      var tableBody = document.getElementById("table-body");
+      while (tableBody.firstChild) {
+        tableBody.removeChild(tableBody.firstChild);
+      }
+      flashcards.forEach(function (flashcard) {
+        //tạo hàng trong bảng
+        var row = document.createElement("tr");
+        //tạo các ô trong hàng
+        var flashcardIdCell = document.createElement("td");
+        flashcardIdCell.textContent = flashcard.Id;
+        row.appendChild(flashcardIdCell);
+
+        var flashcardTermCell = document.createElement("td");
+        flashcardTermCell.textContent = flashcard.Term;
+        row.appendChild(flashcardTermCell);
+
+        var flashcardDefCell = document.createElement("td");
+        flashcardDefCell.textContent = flashcard.Definition;
+        row.appendChild(flashcardDefCell);
+
+        var flashcardDateCell = document.createElement("td");
+        flashcardDateCell.textContent = flashcard.CreatedDate;
+        row.appendChild(flashcardDateCell);
+
+        tableBody.appendChild(row);
+      });
+    };
+    socket.close = () => {
+      console.log("connection closed");
+    };
+  </script>
+  <body>
+    <h1>Websocket show flashcard realtime</h1>
+    <table id="table-body"></table>
+    <style>
+      table {
+        border-collapse: collapse;
+      }
+      table td {
+        border: 1px solid black;
+        padding: 8px;
+      }
+    </style>
+  </body>
+</html>

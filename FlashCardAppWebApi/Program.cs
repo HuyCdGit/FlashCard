@@ -1,4 +1,3 @@
-using FlashCardAppWebApi.Attribute;
 using FlashCardAppWebApi.Filters;
 using FlashCardAppWebApi.Models;
 using FlashCardAppWebApi.Repositories;
@@ -26,6 +25,9 @@ builder.Services.AddScoped<IUserCategoryService, UserCategoryService>();
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+
+builder.Services.AddScoped<IFlashcardReposotory, FlashcardRepository>();
+builder.Services.AddScoped<IFlashcardService, FlashcardService>();
 
 builder.Services.AddScoped<JwtAuthorizeFilter>();
 //Configure JWt 
@@ -66,6 +68,13 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 app.UseAuthentication();
+
+var webSocketOption = new WebSocketOptions
+{
+    KeepAliveInterval = TimeSpan.FromMinutes(2)
+};
+
+app.UseWebSockets();
 
 
 app.MapControllers();
